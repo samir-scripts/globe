@@ -1,0 +1,20 @@
+
+  
+    
+
+  create  table "globe"."public_core"."dim_countries__dbt_tmp"
+  
+  
+    as
+  
+  (
+    with seed_data as (
+    select * from "globe"."public"."iso3_to_continent"
+)
+
+select
+    iso3,
+    continent
+from seed_data
+  );
+  

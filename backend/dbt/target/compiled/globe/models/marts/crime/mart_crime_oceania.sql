@@ -1,0 +1,1 @@
+select * from "globe"."public_core"."fct_homicides" where continent = 'Oceania'
