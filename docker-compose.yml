@@ -1,10 +1,9 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgis/postgis:15-3.3
+    platform: linux/amd64
     ports:
-      - "5432:5432"
+      - "5435:5432"
     environment:
       POSTGRES_DB: ${NAME:-globe}
       POSTGRES_PASSWORD: ${PASSWORD:-yeezus9090}
@@ -13,6 +12,7 @@ services:
 
   graphql-engine:
     image: hasura/graphql-engine:v2.35.0
+    platform: linux/arm64
     ports:
       - "8080:8080"
     depends_on:

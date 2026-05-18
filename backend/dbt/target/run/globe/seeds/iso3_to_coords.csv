@@ -1,0 +1,14 @@
+
+    
+    
+    
+    create table "globe"."public"."iso3_to_coords" ("iso3" text,"latitude" float8,"longitude" float8)
+  ;
+    -- dbt seed --
+    
+          insert into "globe"."public"."iso3_to_coords" ("iso3", "latitude", "longitude") values
+          (%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s),(%s,%s,%s)
+      
+
+;
+  

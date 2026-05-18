@@ -12,7 +12,8 @@ joined as (
         h.iso3,
         c.continent,
         h.reporting_year,
-        h.homicide_rate
+        h.homicide_rate,
+        c.geom
     from homicides h
     inner join countries c on h.iso3 = c.iso3
 )
