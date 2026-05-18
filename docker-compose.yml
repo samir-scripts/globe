@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:15-3.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${NAME:-globe}
+      POSTGRES_PASSWORD: ${PASSWORD:-yeezus9090}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  graphql-engine:
+    image: hasura/graphql-engine:v2.35.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    restart: always
+    environment:
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgresql://postgres:${PASSWORD:-yeezus9090}@postgres:5432/${NAME:-globe}
+      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:${PASSWORD:-yeezus9090}@postgres:5432/${NAME:-globe}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_ADMIN_SECRET:-myadminsecret}
+
+volumes:
+  postgres_data:
