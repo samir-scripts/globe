@@ -1,9 +1,7 @@
 
     
     
-    
-    create table "globe"."public"."iso3_to_coords" ("iso3" text,"latitude" float8,"longitude" float8)
-  ;
+    truncate table "globe"."public"."iso3_to_coords";
     -- dbt seed --
     
           insert into "globe"."public"."iso3_to_coords" ("iso3", "latitude", "longitude") values

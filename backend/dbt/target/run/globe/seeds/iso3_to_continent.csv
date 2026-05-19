@@ -1,9 +1,7 @@
 
     
     
-    
-    create table "globe"."public"."iso3_to_continent" ("iso3" text,"continent" text)
-  ;
+    truncate table "globe"."public"."iso3_to_continent";
     -- dbt seed --
     
           insert into "globe"."public"."iso3_to_continent" ("iso3", "continent") values
