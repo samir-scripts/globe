@@ -204,8 +204,8 @@ export default function CountryChart() {
         )}
 
         {!loading && !error && data.length > 0 && (
-          <div className="flex-1 min-h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="flex-1 min-h-[300px] min-w-0">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
               <LineChart
                 data={data}
                 margin={{ top: 8, right: 12, left: -4, bottom: 8 }}

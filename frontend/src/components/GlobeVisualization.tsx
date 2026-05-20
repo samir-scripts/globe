@@ -302,12 +302,21 @@ export default function GlobeVisualization() {
   }
 
   return (
-    <div className="w-full h-screen bg-background flex items-center justify-center relative font-mono">
+    <div 
+      className="w-full h-screen flex items-center justify-center relative font-mono transition-colors duration-300"
+      style={{
+        background: isDark
+          ? 'radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, var(--background) 70%)'
+          : 'radial-gradient(circle at center, rgba(0,0,0,0.05) 0%, var(--background) 70%)'
+      }}
+    >
       <Globe
         ref={globeEl}
         backgroundColor="rgba(0,0,0,0)"
         globeMaterial={globeMaterial}
-        showAtmosphere={false}
+        showAtmosphere={true}
+        atmosphereColor={isDark ? '#1A1A1A' : '#CBD5E1'}
+        atmosphereAltitude={0.15}
         polygonsData={polygonData}
         polygonAltitude={getPolygonAltitude}
         polygonCapColor={getPolygonCapColor}
