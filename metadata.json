@@ -9,6 +9,9 @@
           "table": {
             "name": "mart_complete_countries",
             "schema": "public_marts"
+          },
+          "configuration": {
+            "custom_name": "mart_complete_countries"
           }
         }
       ],
