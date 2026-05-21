@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('globe', 'homicide') }}
+    select * from {{ source('globe', 'total_statistics') }}
 ),
 
 renamed as (
@@ -7,7 +7,9 @@ renamed as (
         "Country" as country_name,
         "ISO3" as iso3,
         "Year" as reporting_year,
-        "Homicide Rate" as homicide_rate
+        "Homicide Rate" as homicide_rate,
+        latitude as latitude,
+        longitude as longitude
     from source
 )
 

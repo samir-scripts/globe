@@ -4,4 +4,4 @@ sources:
   - name: globe
     schema: public
     tables:
-      - name: homicide
+      - name: total_statistics
