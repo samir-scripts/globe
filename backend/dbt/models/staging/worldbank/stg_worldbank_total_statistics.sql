@@ -7,9 +7,7 @@ renamed as (
         "Country" as country_name,
         "ISO3" as iso3,
         "Year" as reporting_year,
-        "Homicide Rate" as homicide_rate,
-        latitude as latitude,
-        longitude as longitude
+        "Homicide Rate" as homicide_rate
     from source
 )
 

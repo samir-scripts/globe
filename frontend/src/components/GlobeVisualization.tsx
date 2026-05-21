@@ -125,8 +125,8 @@ export default function GlobeVisualization() {
       try {
         const query = continent === 'All' ? GET_HOMICIDE_DATA : GET_HOMICIDE_DATA_BY_CONTINENT;
         const variables = continent === 'All' ? { year } : { year, continent };
-        const response = await fetchGraphQL(query, variables) as { fct_homicides: HomicideRecord[] };
-        const records = response.fct_homicides || [];
+        const response = await fetchGraphQL(query, variables) as { mart_complete_countries: HomicideRecord[] };
+        const records = response.mart_complete_countries || [];
         setCountriesData(records);
         setHasuraCount(records.length);
       } catch (err: any) {

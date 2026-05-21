@@ -1,1 +1,32 @@
-{"version":3,"sources":[{"name":"default","kind":"postgres","tables":[{"table":{"name":"dim_countries","schema":"public_core"},"array_relationships":[{"name":"homicides","using":{"manual_configuration":{"column_mapping":{"iso3":"iso3"},"insertion_order":null,"remote_table":{"name":"fct_homicides","schema":"public_core"}}}}]},{"table":{"name":"fct_homicides","schema":"public_core"},"object_relationships":[{"name":"country","using":{"manual_configuration":{"column_mapping":{"iso3":"iso3"},"insertion_order":null,"remote_table":{"name":"dim_countries","schema":"public_core"}}}}]}],"configuration":{"connection_info":{"database_url":{"from_env":"HASURA_GRAPHQL_DATABASE_URL"},"isolation_level":"read-committed","pool_settings":{"connection_lifetime":600,"idle_timeout":180,"max_connections":50,"retries":1},"use_prepared_statements":true}}}]}
+{
+  "version": 3,
+  "sources": [
+    {
+      "name": "default",
+      "kind": "postgres",
+      "tables": [
+        {
+          "table": {
+            "name": "mart_complete_countries",
+            "schema": "public_marts"
+          }
+        }
+      ],
+      "configuration": {
+        "connection_info": {
+          "database_url": {
+            "from_env": "HASURA_GRAPHQL_DATABASE_URL"
+          },
+          "isolation_level": "read-committed",
+          "pool_settings": {
+            "connection_lifetime": 600,
+            "idle_timeout": 180,
+            "max_connections": 50,
+            "retries": 1
+          },
+          "use_prepared_statements": true
+        }
+      }
+    }
+  ]
+}

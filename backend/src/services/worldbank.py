@@ -79,9 +79,9 @@ def process_and_load_data():
         
         connection_uri = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
         
-        print(f"Loading data into 'homicide' table using ADBC...")
+        print(f"Loading data into 'total_statistics' table using ADBC...")
         df.write_database(
-            table_name="homicide",
+            table_name="total_statistics",
             connection=connection_uri,
             engine="adbc",
             if_table_exists="replace"

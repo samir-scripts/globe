@@ -1,6 +1,6 @@
 export const GET_HOMICIDE_DATA = `
   query GetHomicideData($year: Int) {
-    fct_homicides(where: {reporting_year: {_eq: $year}}) {
+    mart_complete_countries(where: {reporting_year: {_eq: $year}}) {
       country_name
       iso3
       continent
@@ -13,7 +13,7 @@ export const GET_HOMICIDE_DATA = `
 
 export const GET_HOMICIDE_DATA_BY_CONTINENT = `
   query GetHomicideDataByContinent($year: Int, $continent: String) {
-    fct_homicides(where: {reporting_year: {_eq: $year}, continent: {_eq: $continent}}) {
+    mart_complete_countries(where: {reporting_year: {_eq: $year}, continent: {_eq: $continent}}) {
       country_name
       iso3
       continent
@@ -26,7 +26,7 @@ export const GET_HOMICIDE_DATA_BY_CONTINENT = `
 
 export const GET_HOMICIDE_TIME_SERIES = `
   query GetHomicideTimeSeries($iso3: String!) {
-    fct_homicides(
+    mart_complete_countries(
       where: { iso3: { _eq: $iso3 } }
       order_by: { reporting_year: asc }
     ) {

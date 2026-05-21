@@ -50,8 +50,8 @@ export default function CountryChart() {
     setLoading(true);
     setError(null);
     try {
-      const result = await fetchGraphQL(GET_HOMICIDE_TIME_SERIES, { iso3 }) as { fct_homicides: HomicideDataPoint[] };
-      setData(result.fct_homicides ?? []);
+      const result = await fetchGraphQL(GET_HOMICIDE_TIME_SERIES, { iso3 }) as { mart_complete_countries: HomicideDataPoint[] };
+      setData(result.mart_complete_countries ?? []);
     } catch (err) {
       console.error('Failed to fetch homicide time series:', err);
       setError('Failed to load data.');
