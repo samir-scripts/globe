@@ -11,12 +11,10 @@ load_dotenv(dotenv_path="backend/.env")
 # Configuration
 INDICATOR = "VC.IHR.PSRC.P5"
 URL = f"https://api.worldbank.org/v2/country/all/indicator/{INDICATOR}?format=json&per_page=20000"
-GEO_URL = "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/csv/countries.csv"
 DATA_DIR = "backend/data"
 CSV_FILE = os.path.join(DATA_DIR, "homicide_data.csv")
 TEMP_CSV_FILE = os.path.join(DATA_DIR, "temp_homicide_data.csv")
 PARQUET_FILE = os.path.join(DATA_DIR, "homicide_data.parquet")
-GEO_CSV_FILE = os.path.join(DATA_DIR, "countries.csv")
 
 def get_file_hash(filepath):
     """Calculate SHA256 hash of a file."""
@@ -32,14 +30,6 @@ def fetch_worldbank_data():
     """Fetch data from World Bank API and save to a temporary CSV file."""
     print(f"Fetching data from {URL}...")
     try:
-        os.makedirs(DATA_DIR, exist_ok=True)
-        
-        print(f"Fetching geographic data from {GEO_URL}...")
-        geo_response = requests.get(GEO_URL)
-        geo_response.raise_for_status()
-        with open(GEO_CSV_FILE, mode='w', encoding='utf-8') as f:
-            f.write(geo_response.text)
-
         response = requests.get(URL)
         response.raise_for_status()
         
@@ -49,6 +39,7 @@ def fetch_worldbank_data():
             return False
 
         records = data_list[1]
+        os.makedirs(DATA_DIR, exist_ok=True)
         
         with open(TEMP_CSV_FILE, mode='w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
@@ -71,37 +62,26 @@ def process_and_load_data():
     """Process CSV to Parquet and load into PostgreSQL."""
     print("Processing data with Polars...")
     try:
-        df_homicide = pl.scan_csv(CSV_FILE)
-        df_homicide = df_homicide.with_columns([
+        df = pl.read_csv(CSV_FILE)
+        df = df.with_columns([
             pl.col("Year").cast(pl.Int32),
             pl.col("Homicide Rate").cast(pl.Float64)
         ])
-        
-        df_geo = pl.scan_csv(GEO_CSV_FILE, ignore_errors=True)
-        
-        df_joined = df_homicide.join(
-            df_geo.select(["iso3", "latitude", "longitude"]),
-            left_on="ISO3",
-            right_on="iso3",
-            how="left"
-        )
-        
-        df = df_joined.collect()
         
         df.write_parquet(PARQUET_FILE)
         print(f"Data saved as parquet to {PARQUET_FILE}")
         
         db_user = os.getenv("DB_USER", "postgres")
-        db_password = os.getenv("PASSWORD", "yeezus9090")
+        db_password = os.getenv("PASSWORD")
         db_host = os.getenv("DB_HOST", "localhost")
-        db_port = os.getenv("PORT", "5432")
+        db_port = os.getenv("DB_PORT", "5432")
         db_name = os.getenv("NAME", "globe")
         
         connection_uri = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
         
-        print(f"Loading data into 'total_statistics' table using ADBC...")
+        print(f"Loading data into 'homicide' table using ADBC...")
         df.write_database(
-            table_name="total_statistics",
+            table_name="homicide",
             connection=connection_uri,
             engine="adbc",
             if_table_exists="replace"
