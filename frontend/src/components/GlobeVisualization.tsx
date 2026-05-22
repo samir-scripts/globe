@@ -20,6 +20,7 @@ interface HomicideRecord {
   iso3: string;
   continent: string;
   reporting_year: number;
+  data_year: number;
   homicide_rate: number;
   geom: unknown;
 }
@@ -40,6 +41,8 @@ interface EnrichedProperties extends Record<string, unknown> {
   country_name: string;
   iso3: string;
   hasData: boolean;
+  data_year?: number;
+  reporting_year?: number;
   admin?: string;
   iso_a3?: string;
   ADMIN?: string;
@@ -153,15 +156,28 @@ export default function GlobeVisualization() {
     
     return geoJson.features.map((feat) => {
       const props = feat.properties as Record<string, string>;
-      const countryStats = countriesData.find((d) => d.iso3 === props.iso_a3);
+      
+      const rawIso_a3 = String(props.iso_a3 || '').trim().toUpperCase();
+      const rawAdm0_a3 = String(props.adm0_a3 || '').trim().toUpperCase();
+      
+      // Prefer iso_a3 if it is a valid ISO3 code (not empty and not -99), otherwise fall back to adm0_a3
+      const resolvedIso3 = (rawIso_a3 && rawIso_a3 !== '-99') 
+        ? rawIso_a3 
+        : (rawAdm0_a3 && rawAdm0_a3 !== '-99') 
+          ? rawAdm0_a3 
+          : '';
+
+      const countryStats = countriesData.find((d) => d.iso3?.trim().toUpperCase() === resolvedIso3);
       return {
         ...feat,
         properties: {
           ...feat.properties,
           homicide_rate: countryStats?.homicide_rate || 0,
           country_name: countryStats?.country_name || (props.admin as string) || '',
-          iso3: (props.iso_a3 as string) || '',
+          iso3: resolvedIso3,
           hasData: !!countryStats,
+          data_year: countryStats?.data_year,
+          reporting_year: countryStats?.reporting_year,
         } as EnrichedProperties,
       };
     });
@@ -195,17 +211,28 @@ export default function GlobeVisualization() {
     const border = isDark ? '#E5E5E5' : '#1A1A1A';
     const text = isDark ? '#FAFAFA' : '#0A0A0A';
     const muted = isDark ? '#A3A3A3' : '#737373';
+    
+    const rateText = feat.properties.hasData 
+      ? feat.properties.homicide_rate.toFixed(2) 
+      : '0.00';
+    
+    let yearSuffix = '';
+    if (feat.properties.hasData && feat.properties.data_year && feat.properties.data_year !== year) {
+      yearSuffix = ` <span style="font-size:10px; opacity:0.8;">(${feat.properties.data_year} data)</span>`;
+    }
+
     return `
       <div style="background:${bg}; padding:10px 14px; border-radius:6px; border:1px solid ${border}; font-family:'JetBrains Mono',monospace; font-size:12px;">
         <div style="color:${text}; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">${feat.properties.country_name || feat.properties.admin}</div>
-        <div style="color:${muted};">Rate: ${feat.properties.homicide_rate.toFixed(2)} per 100k</div>
+        <div style="color:${muted};">Rate: ${rateText} per 100k${yearSuffix}</div>
       </div>
     `;
-  }, [isDark]);
+  }, [isDark, year]);
 
   const handlePolygonClick = useCallback((d: object, event: any, coords: { lat: number, lng: number }) => {
     const feat = d as EnrichedFeature;
-    const iso3 = feat.properties.iso3 || feat.properties.iso_a3 || '';
+    const rawIso3 = feat.properties.iso3 || feat.properties.adm0_a3 || feat.properties.iso_a3 || '';
+    const iso3 = rawIso3 === '-99' ? '' : String(rawIso3).trim().toUpperCase();
     const name = feat.properties.country_name || feat.properties.admin || '';
     
     if (iso3) {

@@ -20,20 +20,72 @@ coords as (
     select * from "globe"."public"."iso3_to_coords"
 ),
 
+year_spine as (
+    select generate_series(2000, 2022) as reporting_year
+),
+
+country_spine as (
+    select distinct iso3, country_name from staging
+),
+
+grid as (
+    select
+        c.country_name,
+        c.iso3,
+        y.reporting_year
+    from country_spine c
+    cross join year_spine y
+),
+
+joined_grid as (
+    select
+        g.country_name,
+        g.iso3,
+        g.reporting_year,
+        s.homicide_rate
+    from grid g
+    left join staging s on g.iso3 = s.iso3 and g.reporting_year = s.reporting_year
+),
+
+with_latest_year as (
+    select
+        country_name,
+        iso3,
+        reporting_year,
+        max(case when homicide_rate is not null then reporting_year end) over (
+            partition by iso3 
+            order by reporting_year 
+            rows between unbounded preceding and current row
+        ) as latest_year_with_data
+    from joined_grid
+),
+
+filled as (
+    select
+        w.country_name,
+        w.iso3,
+        w.reporting_year,
+        w.latest_year_with_data as data_year,
+        s.homicide_rate
+    from with_latest_year w
+    left join staging s on w.iso3 = s.iso3 and w.latest_year_with_data = s.reporting_year
+),
+
 joined as (
     select
-        s.country_name,
-        s.iso3,
+        f.country_name,
+        f.iso3,
         c.continent,
-        s.reporting_year,
-        s.homicide_rate,
+        f.reporting_year,
+        f.data_year,
+        f.homicide_rate,
         co.latitude,
         co.longitude,
         -- Generate a PostGIS Point geometry (SRID 4326 for WGS84)
         public.ST_SetSRID(public.ST_MakePoint(co.longitude::double precision, co.latitude::double precision), 4326) as geom
-    from staging s
-    left join continents c on s.iso3 = c.iso3
-    left join coords co on s.iso3 = co.iso3
+    from filled f
+    left join continents c on f.iso3 = c.iso3
+    left join coords co on f.iso3 = co.iso3
 )
 
 select *

@@ -5,6 +5,7 @@ export const GET_HOMICIDE_DATA = `
       iso3
       continent
       reporting_year
+      data_year
       homicide_rate
       geom
     }
@@ -18,6 +19,7 @@ export const GET_HOMICIDE_DATA_BY_CONTINENT = `
       iso3
       continent
       reporting_year
+      data_year
       homicide_rate
       geom
     }

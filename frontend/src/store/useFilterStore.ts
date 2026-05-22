@@ -25,7 +25,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   continent: 'All',
   country: 'All',
   metric: 'homicide_rate',
-  year: 2021,
+  year: 2020,
   selectedCountryIso3: null,
   selectedCountryName: null,
   isChartPanelOpen: false,
@@ -35,7 +35,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   setMetric: (metric) => set({ metric }),
   setYear: (year) => set({ year }),
   setActiveMetric: (activeMetric) => set({ activeMetric }),
-  resetFilters: () => set({ continent: 'All', country: 'All', metric: 'homicide_rate', year: 2021, activeMetric: 'homicide' }),
+  resetFilters: () => set({ continent: 'All', country: 'All', metric: 'homicide_rate', year: 2020, activeMetric: 'homicide' }),
   selectCountry: (iso3, name) => set({ selectedCountryIso3: iso3, selectedCountryName: name, isChartPanelOpen: true }),
   closeChartPanel: () => set({ isChartPanelOpen: false, selectedCountryIso3: null, selectedCountryName: null }),
 }));
