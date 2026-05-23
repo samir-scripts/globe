@@ -42,7 +42,8 @@ joined_grid as (
         g.country_name,
         g.iso3,
         g.reporting_year,
-        s.homicide_rate
+        s.homicide_rate,
+        s.sexual_violence
     from grid g
     left join staging s on g.iso3 = s.iso3 and g.reporting_year = s.reporting_year
 ),
@@ -56,7 +57,12 @@ with_latest_year as (
             partition by iso3 
             order by reporting_year 
             rows between unbounded preceding and current row
-        ) as latest_year_with_data
+        ) as latest_year_with_data,
+        max(case when sexual_violence is not null then reporting_year end) over (
+            partition by iso3 
+            order by reporting_year 
+            rows between unbounded preceding and current row
+        ) as latest_year_with_sv
     from joined_grid
 ),
 
@@ -66,9 +72,12 @@ filled as (
         w.iso3,
         w.reporting_year,
         w.latest_year_with_data as data_year,
-        s.homicide_rate
+        w.latest_year_with_sv as sv_data_year,
+        s_h.homicide_rate,
+        s_sv.sexual_violence
     from with_latest_year w
-    left join staging s on w.iso3 = s.iso3 and w.latest_year_with_data = s.reporting_year
+    left join staging s_h on w.iso3 = s_h.iso3 and w.latest_year_with_data = s_h.reporting_year
+    left join staging s_sv on w.iso3 = s_sv.iso3 and w.latest_year_with_sv = s_sv.reporting_year
 ),
 
 joined as (
@@ -78,7 +87,9 @@ joined as (
         c.continent,
         f.reporting_year,
         f.data_year,
+        f.sv_data_year,
         f.homicide_rate,
+        f.sexual_violence,
         co.latitude,
         co.longitude,
         -- Generate a PostGIS Point geometry (SRID 4326 for WGS84)

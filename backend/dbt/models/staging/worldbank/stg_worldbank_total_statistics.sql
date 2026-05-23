@@ -7,7 +7,8 @@ renamed as (
         "Country" as country_name,
         "ISO3" as iso3,
         "Year" as reporting_year,
-        "Homicide Rate" as homicide_rate
+        "Homicide Rate" as homicide_rate,
+        "sexual_violence" as sexual_violence
     from source
 )
 
