@@ -11,7 +11,7 @@ coords as (
 ),
 
 year_spine as (
-    select generate_series(2000, 2022) as reporting_year
+    select generate_series(2000, 2023) as reporting_year
 ),
 
 country_spine as (
@@ -49,9 +49,7 @@ with_latest_year as (
             rows between unbounded preceding and current row
         ) as latest_year_with_data,
         max(case when sexual_violence is not null then reporting_year end) over (
-            partition by iso3 
-            order by reporting_year 
-            rows between unbounded preceding and current row
+            partition by iso3
         ) as latest_year_with_sv
     from joined_grid
 ),

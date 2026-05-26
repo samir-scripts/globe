@@ -128,7 +128,7 @@ export default function GlobalFilters() {
             <Slider
               value={[year]}
               min={2000}
-              max={2022}
+              max={2023}
               step={1}
               onValueChange={(val) => {
                 if (Array.isArray(val)) {
@@ -146,7 +146,7 @@ export default function GlobalFilters() {
           <div className="flex justify-between text-[8px] text-white/30 px-1 font-semibold">
             <span>2000</span>
             <span>2011</span>
-            <span>2022</span>
+            <span>2023</span>
           </div>
         </div>
       </div>

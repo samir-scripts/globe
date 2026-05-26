@@ -5,20 +5,30 @@ import polars as pl
 import hashlib
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables from root first, then backend folder
+load_dotenv(dotenv_path=".env")
 load_dotenv(dotenv_path="backend/.env")
 
 # Configuration
 INDICATOR = "VC.IHR.PSRC.P5"
 URL = f"https://api.worldbank.org/v2/country/all/indicator/{INDICATOR}?format=json&per_page=20000"
+
 SEXUAL_VIOLENCE_INDICATOR = "SG.VAW.1549.ZS"
 SEXUAL_VIOLENCE_URL = f"https://api.worldbank.org/v2/country/all/indicator/{SEXUAL_VIOLENCE_INDICATOR}?format=json&per_page=20000"
+
+SEXUAL_VIOLENCE_ME_INDICATOR = "SG.VAW.1549.ME.ZS"
+SEXUAL_VIOLENCE_ME_URL = f"https://api.worldbank.org/v2/country/all/indicator/{SEXUAL_VIOLENCE_ME_INDICATOR}?format=json&per_page=20000"
 
 DATA_DIR = "backend/data"
 CSV_FILE = os.path.join(DATA_DIR, "homicide_data.csv")
 TEMP_CSV_FILE = os.path.join(DATA_DIR, "temp_homicide_data.csv")
+
 SEXUAL_VIOLENCE_CSV = os.path.join(DATA_DIR, "sexual_violence_data.csv")
 TEMP_SEXUAL_VIOLENCE_CSV = os.path.join(DATA_DIR, "temp_sexual_violence_data.csv")
+
+SEXUAL_VIOLENCE_ME_CSV = os.path.join(DATA_DIR, "sexual_violence_me_data.csv")
+TEMP_SEXUAL_VIOLENCE_ME_CSV = os.path.join(DATA_DIR, "temp_sexual_violence_me_data.csv")
+
 PARQUET_FILE = os.path.join(DATA_DIR, "homicide_data.parquet")
 
 def get_file_hash(filepath):
@@ -65,18 +75,20 @@ def fetch_indicator_data(url, temp_csv_filepath, value_column_name):
         return False
 
 def fetch_worldbank_data():
-    """Fetch both datasets to their respective temporary CSV files."""
+    """Fetch all datasets to their respective temporary CSV files."""
     homicide_success = fetch_indicator_data(URL, TEMP_CSV_FILE, "Homicide Rate")
     sv_success = fetch_indicator_data(SEXUAL_VIOLENCE_URL, TEMP_SEXUAL_VIOLENCE_CSV, "sexual_violence")
-    return homicide_success and sv_success
+    sv_me_success = fetch_indicator_data(SEXUAL_VIOLENCE_ME_URL, TEMP_SEXUAL_VIOLENCE_ME_CSV, "sexual_violence_me")
+    return homicide_success and sv_success and sv_me_success
 
 def process_and_load_data():
-    """Process CSV files using Polars LazyFrames, join them horizontally, and load into PostgreSQL."""
+    """Process CSV files using Polars LazyFrames, join and coalesce them, and load into PostgreSQL."""
     print("Processing data with Polars...")
     try:
-        # Read both CSVs into Polars LazyFrames
+        # Read all CSVs into Polars LazyFrames
         lf_homicide = pl.scan_csv(CSV_FILE)
         lf_sv = pl.scan_csv(SEXUAL_VIOLENCE_CSV)
+        lf_sv_me = pl.scan_csv(SEXUAL_VIOLENCE_ME_CSV)
         
         # Cast columns to correct types
         lf_homicide = lf_homicide.with_columns([
@@ -87,10 +99,26 @@ def process_and_load_data():
             pl.col("Year").cast(pl.Int32),
             pl.col("sexual_violence").cast(pl.Float64)
         ])
+        lf_sv_me = lf_sv_me.with_columns([
+            pl.col("Year").cast(pl.Int32),
+            pl.col("sexual_violence_me").cast(pl.Float64)
+        ])
+        
+        # Coalesce the sexual violence and modeled estimates
+        lf_sv_combined = lf_sv.join(
+            lf_sv_me,
+            on=["Country", "ISO3", "Year"],
+            how="full"
+        ).with_columns([
+            pl.coalesce("Country", "Country_right").alias("Country"),
+            pl.coalesce("ISO3", "ISO3_right").alias("ISO3"),
+            pl.coalesce("Year", "Year_right").alias("Year"),
+            pl.coalesce("sexual_violence", "sexual_violence_me").alias("sexual_violence")
+        ]).drop(["Country_right", "ISO3_right", "Year_right", "sexual_violence_me"])
         
         # Join horizontally on Country, ISO3, Year
         lf_joined = lf_homicide.join(
-            lf_sv,
+            lf_sv_combined,
             on=["Country", "ISO3", "Year"],
             how="full"
         ).with_columns([
@@ -105,58 +133,78 @@ def process_and_load_data():
         print(f"Joined data saved as parquet to {PARQUET_FILE}")
         
         db_user = os.getenv("DB_USER", "postgres")
-        db_password = os.getenv("PASSWORD")
+        db_password = os.getenv("PASSWORD", "yeezus9090")
         db_host = os.getenv("DB_HOST", "localhost")
-        db_port = os.getenv("DB_PORT", "5432")
         db_name = os.getenv("NAME", "globe")
         
-        connection_uri = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
-        
-        print("Dropping total_statistics table (with CASCADE) to update schema and handle views...")
+        # Determine the ports to write to
+        configured_port = os.getenv("DB_PORT") or os.getenv("PORT")
+        ports_to_try = []
+        if configured_port:
+            ports_to_try.append(configured_port)
+        for p in ["5435", "5432"]:
+            if p not in ports_to_try:
+                ports_to_try.append(p)
+                
+        write_success = False
         import psycopg2
-        conn = psycopg2.connect(connection_uri)
-        conn.autocommit = True
-        with conn.cursor() as cursor:
-            cursor.execute('DROP TABLE IF EXISTS total_statistics CASCADE;')
-        conn.close()
         
-        print(f"Loading data into 'total_statistics' table using ADBC...")
-        df.write_database(
-            table_name="total_statistics",
-            connection=connection_uri,
-            engine="adbc",
-            if_table_exists="replace"
-        )
-        print("Successfully loaded data into PostgreSQL.")
-        return True
+        for port in ports_to_try:
+            connection_uri = f"postgresql://{db_user}:{db_password}@{db_host}:{port}/{db_name}"
+            print(f"Attempting connection to PostgreSQL on port {port}...")
+            try:
+                conn = psycopg2.connect(connection_uri)
+                conn.autocommit = True
+                with conn.cursor() as cursor:
+                    cursor.execute('DROP TABLE IF EXISTS total_statistics CASCADE;')
+                conn.close()
+                
+                print(f"Loading data into 'total_statistics' table on port {port} using ADBC...")
+                df.write_database(
+                    table_name="total_statistics",
+                    connection=connection_uri,
+                    engine="adbc",
+                    if_table_exists="replace"
+                )
+                print(f"Successfully loaded data into PostgreSQL on port {port}.")
+                write_success = True
+            except Exception as conn_err:
+                print(f"Skipped loading database on port {port}: {conn_err}")
+                
+        return write_success
     except Exception as e:
         print(f"Error during processing/loading: {e}")
         return False
 
 def run_pipeline():
-    """Main pipeline entry point with change detection for both datasets."""
+    """Main pipeline entry point with change detection for all datasets."""
     # Ensure any previous temp files are cleared
-    for temp_file in [TEMP_CSV_FILE, TEMP_SEXUAL_VIOLENCE_CSV]:
+    for temp_file in [TEMP_CSV_FILE, TEMP_SEXUAL_VIOLENCE_CSV, TEMP_SEXUAL_VIOLENCE_ME_CSV]:
         if os.path.exists(temp_file):
             os.remove(temp_file)
 
     if not fetch_worldbank_data():
         # Clean up any partial temp files
-        for temp_file in [TEMP_CSV_FILE, TEMP_SEXUAL_VIOLENCE_CSV]:
+        for temp_file in [TEMP_CSV_FILE, TEMP_SEXUAL_VIOLENCE_CSV, TEMP_SEXUAL_VIOLENCE_ME_CSV]:
             if os.path.exists(temp_file):
                 os.remove(temp_file)
         return "Failed to fetch data."
 
     homicide_changed = get_file_hash(TEMP_CSV_FILE) != get_file_hash(CSV_FILE)
     sv_changed = get_file_hash(TEMP_SEXUAL_VIOLENCE_CSV) != get_file_hash(SEXUAL_VIOLENCE_CSV)
+    sv_me_changed = get_file_hash(TEMP_SEXUAL_VIOLENCE_ME_CSV) != get_file_hash(SEXUAL_VIOLENCE_ME_CSV)
 
-    if not homicide_changed and not sv_changed:
-        print("Both datasets are identical to the current versions. Discarding update.")
-        if os.path.exists(TEMP_CSV_FILE):
-            os.remove(TEMP_CSV_FILE)
-        if os.path.exists(TEMP_SEXUAL_VIOLENCE_CSV):
-            os.remove(TEMP_SEXUAL_VIOLENCE_CSV)
-        return "No updates found. Data discarded."
+    if not homicide_changed and not sv_changed and not sv_me_changed:
+        print("All datasets are identical to the current versions. Discarding update.")
+        for temp_file in [TEMP_CSV_FILE, TEMP_SEXUAL_VIOLENCE_CSV, TEMP_SEXUAL_VIOLENCE_ME_CSV]:
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
+        # Still process and load once to ensure database tables are filled in case they were dropped/out of sync
+        print("Forcing processing/loading to ensure PostgreSQL columns are correct...")
+        if process_and_load_data():
+            return "No updates found, but database was successfully re-synchronized."
+        else:
+            return "No updates found, and database re-synchronization failed."
     else:
         print("New data detected. Updating CSV files and running pipeline...")
         if homicide_changed:
@@ -174,6 +222,14 @@ def run_pipeline():
         else:
             if os.path.exists(TEMP_SEXUAL_VIOLENCE_CSV):
                 os.remove(TEMP_SEXUAL_VIOLENCE_CSV)
+
+        if sv_me_changed:
+            if os.path.exists(SEXUAL_VIOLENCE_ME_CSV):
+                os.remove(SEXUAL_VIOLENCE_ME_CSV)
+            os.rename(TEMP_SEXUAL_VIOLENCE_ME_CSV, SEXUAL_VIOLENCE_ME_CSV)
+        else:
+            if os.path.exists(TEMP_SEXUAL_VIOLENCE_ME_CSV):
+                os.remove(TEMP_SEXUAL_VIOLENCE_ME_CSV)
         
         if process_and_load_data():
             return "Data updated and loaded successfully."
