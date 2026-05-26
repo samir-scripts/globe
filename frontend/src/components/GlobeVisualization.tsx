@@ -93,16 +93,29 @@ function getHeatColor(rate: number, type: 'homicide' | 'sexual_assault'): string
   }
 }
 
-export default function GlobeVisualization() {
-  const { continent, year, selectCountry, activeMetric } = useFilterStore();
-  const [countriesData, setCountriesData] = useState<HomicideRecord[]>([]);
+export default function GlobeVisualization({ initialData }: { initialData: any[] }) {
+  const { continent, year, selectCountry, activeMetric, allData, setAllData } = useFilterStore();
   const [geoJson, setGeoJson] = useState<GeoJsonCollection | null>(null);
   const [loadingGeoJson, setLoadingGeoJson] = useState(true);
-  const [loadingHasura, setLoadingHasura] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [hasuraCount, setHasuraCount] = useState(0);
 
   const globeEl = useRef<GlobeMethods | undefined>(undefined);
+
+  // Initialize store with server data on mount
+  useEffect(() => {
+    if (initialData && initialData.length > 0) {
+      setAllData(initialData);
+    }
+  }, [initialData, setAllData]);
+
+  // Filter countries data locally
+  const countriesData = useMemo(() => {
+    return allData.filter((d) => {
+      if (d.reporting_year !== year) return false;
+      if (continent !== "All" && d.continent !== continent) return false;
+      return true;
+    });
+  }, [allData, continent, year]);
 
   // Load GeoJSON from local bundle
   useEffect(() => {
@@ -125,36 +138,6 @@ export default function GlobeVisualization() {
         setLoadingGeoJson(false);
       });
   }, []);
-
-  // Fetch data from Hasura based on filters
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoadingHasura(true);
-      setError(null);
-      try {
-        const query =
-          continent === "All"
-            ? GET_HOMICIDE_DATA
-            : GET_HOMICIDE_DATA_BY_CONTINENT;
-        const variables = continent === "All" ? { year } : { year, continent };
-        const response = (await fetchGraphQL(query, variables)) as {
-          mart_complete_countries: HomicideRecord[];
-        };
-        const records = response.mart_complete_countries || [];
-        setCountriesData(records);
-        setHasuraCount(records.length);
-      } catch (err: any) {
-        console.error("Error fetching homicide data:", err);
-        setError(
-          err?.message ||
-            "Error connecting to Hasura database. Please check your connection.",
-        );
-      } finally {
-        setLoadingHasura(false);
-      }
-    };
-    fetchData();
-  }, [continent, year]);
 
   // Globe material
   const globeMaterial = useMemo(() => {
@@ -311,7 +294,7 @@ export default function GlobeVisualization() {
     [selectCountry],
   );
 
-  const isLoading = loadingGeoJson || loadingHasura;
+  const isLoading = loadingGeoJson;
 
   if (error) {
     return (
@@ -350,7 +333,7 @@ export default function GlobeVisualization() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
               <span className="font-semibold uppercase tracking-wider text-card-foreground">
-                Hasura Data Streamer
+                Geography Streamer
               </span>
             </div>
             <span className="text-[10px] text-muted-foreground/60 uppercase">
@@ -379,32 +362,7 @@ export default function GlobeVisualization() {
               <span className="text-muted-foreground uppercase">
                 2. Database Stream
               </span>
-              {loadingHasura ? (
-                <span className="text-amber-500 animate-pulse uppercase">
-                  Connecting to Hasura...
-                </span>
-              ) : (
-                <span className="text-emerald-500 uppercase">Connected</span>
-              )}
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground uppercase">
-                3. Stream Validation
-              </span>
-              {loadingHasura ? (
-                <span className="text-muted-foreground/40 uppercase">
-                  Awaiting stream...
-                </span>
-              ) : hasuraCount > 0 ? (
-                <span className="text-emerald-500 uppercase">
-                  Validated ({hasuraCount} records)
-                </span>
-              ) : (
-                <span className="text-red-500 uppercase">
-                  Empty Stream (0 records)
-                </span>
-              )}
+              <span className="text-emerald-500 uppercase">Ready (Server Pre-fetched)</span>
             </div>
           </div>
 

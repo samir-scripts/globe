@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import {
   LineChart,
   Line,
@@ -11,8 +11,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useFilterStore, MetricType } from "@/store/useFilterStore";
-import { fetchGraphQL } from "@/lib/hasura";
-import { GET_HOMICIDE_TIME_SERIES } from "@/queries/crime";
 import { METRICS, MetricId } from "@/types/metrics";
 import {
   Select,
@@ -46,43 +44,18 @@ export default function CountryChart() {
     setMetric,
     activeMetric,
     setActiveMetric,
+    allData,
   } = useFilterStore();
 
-  const [data, setData] = useState<HomicideDataPoint[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [lastFetchedIso3, useRefState] = useState<string | null>(null);
-  const lastFetchedIso3Ref = useRef<string | null>(null);
+  const data = useMemo(() => {
+    if (!selectedCountryIso3 || !isChartPanelOpen) return [];
+    return allData
+      .filter((d) => d.iso3 === selectedCountryIso3)
+      .sort((a, b) => a.reporting_year - b.reporting_year);
+  }, [allData, selectedCountryIso3, isChartPanelOpen]);
 
-  const fetchData = useCallback(async (iso3: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = (await fetchGraphQL(GET_HOMICIDE_TIME_SERIES, {
-        iso3,
-      })) as { mart_complete_countries: HomicideDataPoint[] };
-      setData(result.mart_complete_countries ?? []);
-    } catch (err) {
-      console.error("Failed to fetch homicide time series:", err);
-      setError("Failed to load data.");
-      setData([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!selectedCountryIso3 || !isChartPanelOpen) return;
-    if (lastFetchedIso3Ref.current === selectedCountryIso3) return;
-    lastFetchedIso3Ref.current = selectedCountryIso3;
-    fetchData(selectedCountryIso3);
-  });
-
-  useEffect(() => {
-    if (!isChartPanelOpen) {
-      lastFetchedIso3Ref.current = null;
-    }
-  }, [isChartPanelOpen]);
+  const loading = false;
+  const error = null;
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

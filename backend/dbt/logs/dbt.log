@@ -15045,3 +15045,801 @@ drop table if exists "globe"."public_marts"."mart_complete_countries__dbt_backup
 [0m00:48:11.700281 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106bebcd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1069779d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105827e70>]}
 [0m00:48:11.700407 [debug] [MainThread]: Flushing usage events
 [0m00:48:11.803766 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m01:01:55.092007 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106bbd940>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11821b750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11821bb10>]}
+
+
+============================== 01:01:55.096184 | 1a16afd4-cd71-4370-8814-59a6d36c0dae ==============================
+[0m01:01:55.096184 [info ] [MainThread]: Running with dbt=1.11.10
+[0m01:01:55.096492 [debug] [MainThread]: running dbt with arguments {'empty': 'False', 'invocation_command': 'dbt run', 'target_path': 'None', 'introspect': 'True', 'use_colors': 'True', 'printer_width': '80', 'quiet': 'False', 'version_check': 'True', 'static_parser': 'True', 'warn_error': 'None', 'no_print': 'None', 'use_experimental_parser': 'False', 'log_path': '/Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/logs', 'indirect_selection': 'eager', 'write_json': 'True', 'log_format': 'default', 'fail_fast': 'False', 'debug': 'False', 'send_anonymous_usage_stats': 'True', 'log_cache_events': 'False', 'cache_selected_only': 'False', 'profiles_dir': '/Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])'}
+[0m01:01:55.191616 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1070f8b00>]}
+[0m01:01:55.222926 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1181e3020>]}
+[0m01:01:55.223553 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m01:01:55.284578 [debug] [MainThread]: checksum: 2f247960199844e016e6a527f21364251736722c6212f4b11e96849fe0fc9e96, vars: {}, profile: , target: , version: 1.11.10
+[0m01:01:55.347874 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m01:01:55.348150 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m01:01:55.348294 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m01:01:55.350906 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.globe.core
+[0m01:01:55.369971 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1182b7750>]}
+[0m01:01:55.411296 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/manifest.json
+[0m01:01:55.412610 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/semantic_manifest.json
+[0m01:01:55.418358 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11be0caa0>]}
+[0m01:01:55.418622 [info ] [MainThread]: Found 2 models, 2 seeds, 1 source, 467 macros
+[0m01:01:55.418765 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11bf5e970>]}
+[0m01:01:55.419576 [info ] [MainThread]: 
+[0m01:01:55.419734 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m01:01:55.419845 [info ] [MainThread]: 
+[0m01:01:55.420116 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m01:01:55.422118 [debug] [ThreadPool]: Acquiring new postgres connection 'list_globe'
+[0m01:01:55.422372 [debug] [ThreadPool]: Acquiring new postgres connection 'list_globe'
+[0m01:01:55.519354 [debug] [ThreadPool]: Using postgres connection "list_globe"
+[0m01:01:55.519689 [debug] [ThreadPool]: Using postgres connection "list_globe"
+[0m01:01:55.519835 [debug] [ThreadPool]: On list_globe: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m01:01:55.519995 [debug] [ThreadPool]: On list_globe: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m01:01:55.520166 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:01:55.520303 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:01:55.694899 [debug] [ThreadPool]: SQL status: SELECT 11 in 0.174 seconds
+[0m01:01:55.695346 [debug] [ThreadPool]: SQL status: SELECT 11 in 0.175 seconds
+[0m01:01:55.696191 [debug] [ThreadPool]: On list_globe: Close
+[0m01:01:55.696773 [debug] [ThreadPool]: On list_globe: Close
+[0m01:01:55.699718 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_globe, now list_globe_public)
+[0m01:01:55.705986 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_globe, now list_globe_public_staging)
+[0m01:01:55.706576 [debug] [ThreadPool]: Acquiring new postgres connection 'list_globe_public_marts'
+[0m01:01:55.707813 [debug] [ThreadPool]: Using postgres connection "list_globe_public_staging"
+[0m01:01:55.705595 [debug] [ThreadPool]: Using postgres connection "list_globe_public"
+[0m01:01:55.709613 [debug] [ThreadPool]: Using postgres connection "list_globe_public_marts"
+[0m01:01:55.709836 [debug] [ThreadPool]: On list_globe_public_staging: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe_public_staging"} */
+select
+      'globe' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public_staging'
+    union all
+    select
+      'globe' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public_staging'
+    union all
+    select
+      'globe' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public_staging'
+  
+[0m01:01:55.709993 [debug] [ThreadPool]: On list_globe_public: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe_public"} */
+select
+      'globe' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'globe' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'globe' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m01:01:55.710134 [debug] [ThreadPool]: On list_globe_public_marts: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe_public_marts"} */
+select
+      'globe' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public_marts'
+    union all
+    select
+      'globe' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public_marts'
+    union all
+    select
+      'globe' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public_marts'
+  
+[0m01:01:55.710267 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m01:01:55.710389 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m01:01:55.710511 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:01:55.805593 [debug] [ThreadPool]: SQL status: SELECT 3 in 0.095 seconds
+[0m01:01:55.805847 [debug] [ThreadPool]: SQL status: SELECT 7 in 0.095 seconds
+[0m01:01:55.806027 [debug] [ThreadPool]: SQL status: SELECT 8 in 0.096 seconds
+[0m01:01:55.806676 [debug] [ThreadPool]: On list_globe_public_staging: ROLLBACK
+[0m01:01:55.807239 [debug] [ThreadPool]: On list_globe_public_marts: ROLLBACK
+[0m01:01:55.807774 [debug] [ThreadPool]: On list_globe_public: ROLLBACK
+[0m01:01:55.809271 [debug] [ThreadPool]: On list_globe_public_staging: Close
+[0m01:01:55.809851 [debug] [ThreadPool]: On list_globe_public_marts: Close
+[0m01:01:55.810030 [debug] [ThreadPool]: On list_globe_public: Close
+[0m01:01:55.817201 [debug] [MainThread]: Using postgres connection "master"
+[0m01:01:55.818019 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m01:01:55.818395 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m01:01:55.899320 [debug] [MainThread]: SQL status: SELECT 3 in 0.081 seconds
+[0m01:01:55.900576 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11c102c30>]}
+[0m01:01:55.900865 [debug] [MainThread]: On master: ROLLBACK
+[0m01:01:55.903515 [debug] [MainThread]: On master: COMMIT
+[0m01:01:55.903832 [debug] [MainThread]: Using postgres connection "master"
+[0m01:01:55.904278 [debug] [MainThread]: On master: COMMIT
+[0m01:01:55.905786 [debug] [MainThread]: SQL status: COMMIT in 0.001 seconds
+[0m01:01:55.905995 [debug] [MainThread]: On master: Close
+[0m01:01:55.908546 [debug] [Thread-1 (]: Began running node model.globe.stg_worldbank_total_statistics
+[0m01:01:55.908858 [info ] [Thread-1 (]: 1 of 2 START sql view model public_staging.stg_worldbank_total_statistics ...... [RUN]
+[0m01:01:55.909081 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_globe_public, now model.globe.stg_worldbank_total_statistics)
+[0m01:01:55.909220 [debug] [Thread-1 (]: Began compiling node model.globe.stg_worldbank_total_statistics
+[0m01:01:55.915544 [debug] [Thread-1 (]: Writing injected SQL for node "model.globe.stg_worldbank_total_statistics"
+[0m01:01:55.916116 [debug] [Thread-1 (]: Began executing node model.globe.stg_worldbank_total_statistics
+[0m01:01:55.935407 [debug] [Thread-1 (]: Writing runtime sql for node "model.globe.stg_worldbank_total_statistics"
+[0m01:01:55.936082 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:01:55.936238 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+
+  create view "globe"."public_staging"."stg_worldbank_total_statistics__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "globe"."public"."total_statistics"
+),
+
+renamed as (
+    select
+        "Country" as country_name,
+        "ISO3" as iso3,
+        "Year" as reporting_year,
+        "Homicide Rate" as homicide_rate,
+        "sexual_violence" as sexual_violence
+    from source
+)
+
+select * from renamed
+  );
+[0m01:01:55.936372 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m01:01:55.999818 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.063 seconds
+[0m01:01:56.002898 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:01:56.003081 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+alter table "globe"."public_staging"."stg_worldbank_total_statistics" rename to "stg_worldbank_total_statistics__dbt_backup"
+[0m01:01:56.005656 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.002 seconds
+[0m01:01:56.007733 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:01:56.008144 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+alter table "globe"."public_staging"."stg_worldbank_total_statistics__dbt_tmp" rename to "stg_worldbank_total_statistics"
+[0m01:01:56.010704 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.002 seconds
+[0m01:01:56.022530 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: COMMIT
+[0m01:01:56.022905 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:01:56.023332 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: COMMIT
+[0m01:01:56.030070 [debug] [Thread-1 (]: SQL status: COMMIT in 0.006 seconds
+[0m01:01:56.033535 [debug] [Thread-1 (]: Applying DROP to: "globe"."public_staging"."stg_worldbank_total_statistics__dbt_backup"
+[0m01:01:56.037422 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:01:56.037678 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+drop view if exists "globe"."public_staging"."stg_worldbank_total_statistics__dbt_backup" cascade
+[0m01:01:56.047559 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.010 seconds
+[0m01:01:56.049565 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: Close
+[0m01:01:56.050798 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11c2d0290>]}
+[0m01:01:56.051411 [info ] [Thread-1 (]: 1 of 2 OK created sql view model public_staging.stg_worldbank_total_statistics . [[32mCREATE VIEW[0m in 0.14s]
+[0m01:01:56.051939 [debug] [Thread-1 (]: Finished running node model.globe.stg_worldbank_total_statistics
+[0m01:01:56.052687 [debug] [Thread-2 (]: Began running node model.globe.mart_complete_countries
+[0m01:01:56.053050 [info ] [Thread-2 (]: 2 of 2 START sql table model public_marts.mart_complete_countries .............. [RUN]
+[0m01:01:56.053566 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_globe_public_staging, now model.globe.mart_complete_countries)
+[0m01:01:56.053724 [debug] [Thread-2 (]: Began compiling node model.globe.mart_complete_countries
+[0m01:01:56.056251 [debug] [Thread-2 (]: Writing injected SQL for node "model.globe.mart_complete_countries"
+[0m01:01:56.056668 [debug] [Thread-2 (]: Began executing node model.globe.mart_complete_countries
+[0m01:01:56.072744 [debug] [Thread-2 (]: Writing runtime sql for node "model.globe.mart_complete_countries"
+[0m01:01:56.073417 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:01:56.074222 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+
+  
+    
+
+  create  table "globe"."public_marts"."mart_complete_countries__dbt_tmp"
+  
+  
+    as
+  
+  (
+    with staging as (
+    select * from "globe"."public_staging"."stg_worldbank_total_statistics"
+),
+
+continents as (
+    select * from "globe"."public"."iso3_to_continent"
+),
+
+coords as (
+    select * from "globe"."public"."iso3_to_coords"
+),
+
+year_spine as (
+    select generate_series(2000, 2023) as reporting_year
+),
+
+country_spine as (
+    select distinct iso3, country_name from staging
+),
+
+grid as (
+    select
+        c.country_name,
+        c.iso3,
+        y.reporting_year
+    from country_spine c
+    cross join year_spine y
+),
+
+joined_grid as (
+    select
+        g.country_name,
+        g.iso3,
+        g.reporting_year,
+        s.homicide_rate,
+        s.sexual_violence
+    from grid g
+    left join staging s on g.iso3 = s.iso3 and g.reporting_year = s.reporting_year
+),
+
+with_latest_year as (
+    select
+        country_name,
+        iso3,
+        reporting_year,
+        max(case when homicide_rate is not null then reporting_year end) over (
+            partition by iso3 
+            order by reporting_year 
+            rows between unbounded preceding and current row
+        ) as latest_year_with_data,
+        max(case when sexual_violence is not null then reporting_year end) over (
+            partition by iso3
+        ) as latest_year_with_sv
+    from joined_grid
+),
+
+filled as (
+    select
+        w.country_name,
+        w.iso3,
+        w.reporting_year,
+        w.latest_year_with_data as data_year,
+        w.latest_year_with_sv as sv_data_year,
+        s_h.homicide_rate,
+        s_sv.sexual_violence
+    from with_latest_year w
+    left join staging s_h on w.iso3 = s_h.iso3 and w.latest_year_with_data = s_h.reporting_year
+    left join staging s_sv on w.iso3 = s_sv.iso3 and w.latest_year_with_sv = s_sv.reporting_year
+),
+
+joined as (
+    select
+        f.country_name,
+        f.iso3,
+        c.continent,
+        f.reporting_year,
+        f.data_year,
+        f.sv_data_year,
+        f.homicide_rate,
+        f.sexual_violence,
+        co.latitude,
+        co.longitude,
+        -- Generate a PostGIS Point geometry (SRID 4326 for WGS84)
+        public.ST_SetSRID(public.ST_MakePoint(co.longitude::double precision, co.latitude::double precision), 4326) as geom
+    from filled f
+    left join continents c on f.iso3 = c.iso3
+    left join coords co on f.iso3 = co.iso3
+)
+
+select *
+from joined
+where
+    country_name is not null
+    and iso3 is not null
+    and reporting_year is not null
+    and (homicide_rate is not null or sexual_violence is not null)
+    and latitude is not null
+    and longitude is not null
+  );
+  
+[0m01:01:56.074907 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m01:01:56.307190 [debug] [Thread-2 (]: SQL status: SELECT 4871 in 0.232 seconds
+[0m01:01:56.311819 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:01:56.312082 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+alter table "globe"."public_marts"."mart_complete_countries" rename to "mart_complete_countries__dbt_backup"
+[0m01:01:56.314130 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.002 seconds
+[0m01:01:56.315661 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:01:56.315867 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+alter table "globe"."public_marts"."mart_complete_countries__dbt_tmp" rename to "mart_complete_countries"
+[0m01:01:56.317371 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m01:01:56.318183 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: COMMIT
+[0m01:01:56.318347 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:01:56.318474 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: COMMIT
+[0m01:01:56.322555 [debug] [Thread-2 (]: SQL status: COMMIT in 0.004 seconds
+[0m01:01:56.324258 [debug] [Thread-2 (]: Applying DROP to: "globe"."public_marts"."mart_complete_countries__dbt_backup"
+[0m01:01:56.329473 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:01:56.329809 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+drop table if exists "globe"."public_marts"."mart_complete_countries__dbt_backup" cascade
+[0m01:01:56.351518 [debug] [Thread-2 (]: SQL status: DROP TABLE in 0.021 seconds
+[0m01:01:56.352361 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: Close
+[0m01:01:56.352692 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1a16afd4-cd71-4370-8814-59a6d36c0dae', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11c2bcd60>]}
+[0m01:01:56.353008 [info ] [Thread-2 (]: 2 of 2 OK created sql table model public_marts.mart_complete_countries ......... [[32mSELECT 4871[0m in 0.30s]
+[0m01:01:56.353243 [debug] [Thread-2 (]: Finished running node model.globe.mart_complete_countries
+[0m01:01:56.353957 [debug] [MainThread]: On master: COMMIT
+[0m01:01:56.354084 [debug] [MainThread]: Using postgres connection "master"
+[0m01:01:56.354182 [debug] [MainThread]: On master: COMMIT
+[0m01:01:56.354277 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m01:01:56.385844 [debug] [MainThread]: SQL status: COMMIT in 0.031 seconds
+[0m01:01:56.386240 [debug] [MainThread]: On master: Close
+[0m01:01:56.386511 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m01:01:56.386627 [debug] [MainThread]: Connection 'model.globe.stg_worldbank_total_statistics' was properly closed.
+[0m01:01:56.386721 [debug] [MainThread]: Connection 'model.globe.mart_complete_countries' was properly closed.
+[0m01:01:56.386804 [debug] [MainThread]: Connection 'list_globe_public_marts' was properly closed.
+[0m01:01:56.386933 [info ] [MainThread]: 
+[0m01:01:56.387079 [info ] [MainThread]: Finished running 1 table model, 1 view model in 0 hours 0 minutes and 0.97 seconds (0.97s).
+[0m01:01:56.387416 [debug] [MainThread]: Command end result
+[0m01:01:56.402206 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/manifest.json
+[0m01:01:56.403394 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/semantic_manifest.json
+[0m01:01:56.409613 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/run_results.json
+[0m01:01:56.409834 [info ] [MainThread]: 
+[0m01:01:56.410045 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m01:01:56.410158 [info ] [MainThread]: 
+[0m01:01:56.410306 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m01:01:56.412480 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 1.3797972, "process_in_blocks": "0", "process_kernel_time": 0.291976, "process_mem_max_rss": "129531904", "process_out_blocks": "0", "process_user_time": 1.155487}
+[0m01:01:56.412720 [debug] [MainThread]: Command `dbt run` succeeded at 01:01:56.412680 after 1.38 seconds
+[0m01:01:56.412891 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11bfc91d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11c12dd00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11c168dd0>]}
+[0m01:01:56.413042 [debug] [MainThread]: Flushing usage events
+[0m01:01:56.589082 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m01:16:51.137628 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1093bd940>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ab1b750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ab1bb10>]}
+
+
+============================== 01:16:51.140129 | 455b647d-97e5-49d3-9a51-6f8a33200626 ==============================
+[0m01:16:51.140129 [info ] [MainThread]: Running with dbt=1.11.10
+[0m01:16:51.140379 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'write_json': 'True', 'use_colors': 'True', 'version_check': 'True', 'target_path': 'None', 'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'no_print': 'None', 'use_experimental_parser': 'False', 'warn_error': 'None', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'indirect_selection': 'eager', 'empty': 'False', 'cache_selected_only': 'False', 'log_path': '/Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/logs', 'invocation_command': 'dbt run', 'static_parser': 'True', 'debug': 'False', 'printer_width': '80', 'log_format': 'default', 'profiles_dir': '/Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt', 'quiet': 'False', 'partial_parse': 'True'}
+[0m01:16:51.266311 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1099f4b00>]}
+[0m01:16:51.289502 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aae3020>]}
+[0m01:16:51.290025 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m01:16:51.336119 [debug] [MainThread]: checksum: 2f247960199844e016e6a527f21364251736722c6212f4b11e96849fe0fc9e96, vars: {}, profile: , target: , version: 1.11.10
+[0m01:16:51.385830 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m01:16:51.386009 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m01:16:51.386117 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m01:16:51.388182 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.globe.core
+[0m01:16:51.402579 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10abb7750>]}
+[0m01:16:51.435436 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/manifest.json
+[0m01:16:51.436629 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/semantic_manifest.json
+[0m01:16:51.441445 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bd40aa0>]}
+[0m01:16:51.441649 [info ] [MainThread]: Found 2 models, 2 seeds, 1 source, 467 macros
+[0m01:16:51.441780 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10be92970>]}
+[0m01:16:51.442518 [info ] [MainThread]: 
+[0m01:16:51.442652 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m01:16:51.442758 [info ] [MainThread]: 
+[0m01:16:51.443105 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m01:16:51.444531 [debug] [ThreadPool]: Acquiring new postgres connection 'list_globe'
+[0m01:16:51.444721 [debug] [ThreadPool]: Acquiring new postgres connection 'list_globe'
+[0m01:16:51.507552 [debug] [ThreadPool]: Using postgres connection "list_globe"
+[0m01:16:51.507753 [debug] [ThreadPool]: Using postgres connection "list_globe"
+[0m01:16:51.507891 [debug] [ThreadPool]: On list_globe: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m01:16:51.508009 [debug] [ThreadPool]: On list_globe: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m01:16:51.508113 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:16:51.508204 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:16:51.614538 [debug] [ThreadPool]: SQL status: SELECT 11 in 0.106 seconds
+[0m01:16:51.614914 [debug] [ThreadPool]: SQL status: SELECT 11 in 0.107 seconds
+[0m01:16:51.615748 [debug] [ThreadPool]: On list_globe: Close
+[0m01:16:51.616330 [debug] [ThreadPool]: On list_globe: Close
+[0m01:16:51.618632 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_globe, now list_globe_public)
+[0m01:16:51.619146 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_globe, now list_globe_public_marts)
+[0m01:16:51.622122 [debug] [ThreadPool]: Using postgres connection "list_globe_public"
+[0m01:16:51.622872 [debug] [ThreadPool]: Acquiring new postgres connection 'list_globe_public_staging'
+[0m01:16:51.623595 [debug] [ThreadPool]: Using postgres connection "list_globe_public_marts"
+[0m01:16:51.623981 [debug] [ThreadPool]: On list_globe_public: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe_public"} */
+select
+      'globe' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'globe' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'globe' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m01:16:51.624605 [debug] [ThreadPool]: Using postgres connection "list_globe_public_staging"
+[0m01:16:51.624761 [debug] [ThreadPool]: On list_globe_public_marts: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe_public_marts"} */
+select
+      'globe' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public_marts'
+    union all
+    select
+      'globe' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public_marts'
+    union all
+    select
+      'globe' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public_marts'
+  
+[0m01:16:51.624898 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m01:16:51.625031 [debug] [ThreadPool]: On list_globe_public_staging: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "list_globe_public_staging"} */
+select
+      'globe' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public_staging'
+    union all
+    select
+      'globe' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public_staging'
+    union all
+    select
+      'globe' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public_staging'
+  
+[0m01:16:51.625149 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m01:16:51.625297 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m01:16:51.697424 [debug] [ThreadPool]: SQL status: SELECT 7 in 0.072 seconds
+[0m01:16:51.698174 [debug] [ThreadPool]: On list_globe_public_marts: ROLLBACK
+[0m01:16:51.698347 [debug] [ThreadPool]: SQL status: SELECT 8 in 0.073 seconds
+[0m01:16:51.698894 [debug] [ThreadPool]: On list_globe_public: ROLLBACK
+[0m01:16:51.699050 [debug] [ThreadPool]: SQL status: SELECT 2 in 0.074 seconds
+[0m01:16:51.699191 [debug] [ThreadPool]: On list_globe_public_marts: Close
+[0m01:16:51.699686 [debug] [ThreadPool]: On list_globe_public_staging: ROLLBACK
+[0m01:16:51.699924 [debug] [ThreadPool]: On list_globe_public: Close
+[0m01:16:51.700911 [debug] [ThreadPool]: On list_globe_public_staging: Close
+[0m01:16:51.703276 [debug] [MainThread]: Using postgres connection "master"
+[0m01:16:51.703488 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m01:16:51.703645 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m01:16:51.758694 [debug] [MainThread]: SQL status: SELECT 2 in 0.055 seconds
+[0m01:16:51.759395 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c0369c0>]}
+[0m01:16:51.759682 [debug] [MainThread]: On master: ROLLBACK
+[0m01:16:51.760432 [debug] [MainThread]: On master: COMMIT
+[0m01:16:51.760543 [debug] [MainThread]: Using postgres connection "master"
+[0m01:16:51.760642 [debug] [MainThread]: On master: COMMIT
+[0m01:16:51.761184 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m01:16:51.761285 [debug] [MainThread]: On master: Close
+[0m01:16:51.762507 [debug] [Thread-1 (]: Began running node model.globe.stg_worldbank_total_statistics
+[0m01:16:51.762716 [info ] [Thread-1 (]: 1 of 2 START sql view model public_staging.stg_worldbank_total_statistics ...... [RUN]
+[0m01:16:51.762885 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_globe_public, now model.globe.stg_worldbank_total_statistics)
+[0m01:16:51.763014 [debug] [Thread-1 (]: Began compiling node model.globe.stg_worldbank_total_statistics
+[0m01:16:51.766517 [debug] [Thread-1 (]: Writing injected SQL for node "model.globe.stg_worldbank_total_statistics"
+[0m01:16:51.766892 [debug] [Thread-1 (]: Began executing node model.globe.stg_worldbank_total_statistics
+[0m01:16:51.781947 [debug] [Thread-1 (]: Writing runtime sql for node "model.globe.stg_worldbank_total_statistics"
+[0m01:16:51.782382 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:16:51.782537 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+
+  create view "globe"."public_staging"."stg_worldbank_total_statistics__dbt_tmp"
+    
+    
+  as (
+    with source as (
+    select * from "globe"."public"."total_statistics"
+),
+
+renamed as (
+    select
+        "Country" as country_name,
+        "ISO3" as iso3,
+        "Year" as reporting_year,
+        "Homicide Rate" as homicide_rate,
+        "sexual_violence" as sexual_violence
+    from source
+)
+
+select * from renamed
+  );
+[0m01:16:51.782674 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m01:16:51.825135 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.042 seconds
+[0m01:16:51.828265 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:16:51.828441 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+alter table "globe"."public_staging"."stg_worldbank_total_statistics__dbt_tmp" rename to "stg_worldbank_total_statistics"
+[0m01:16:51.831761 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.003 seconds
+[0m01:16:51.838359 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: COMMIT
+[0m01:16:51.838588 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:16:51.838725 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: COMMIT
+[0m01:16:51.841262 [debug] [Thread-1 (]: SQL status: COMMIT in 0.002 seconds
+[0m01:16:51.843833 [debug] [Thread-1 (]: Applying DROP to: "globe"."public_staging"."stg_worldbank_total_statistics__dbt_backup"
+[0m01:16:51.845596 [debug] [Thread-1 (]: Using postgres connection "model.globe.stg_worldbank_total_statistics"
+[0m01:16:51.845743 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.stg_worldbank_total_statistics"} */
+drop view if exists "globe"."public_staging"."stg_worldbank_total_statistics__dbt_backup" cascade
+[0m01:16:51.846792 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.001 seconds
+[0m01:16:51.847817 [debug] [Thread-1 (]: On model.globe.stg_worldbank_total_statistics: Close
+[0m01:16:51.848711 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c2047d0>]}
+[0m01:16:51.848983 [info ] [Thread-1 (]: 1 of 2 OK created sql view model public_staging.stg_worldbank_total_statistics . [[32mCREATE VIEW[0m in 0.09s]
+[0m01:16:51.849206 [debug] [Thread-1 (]: Finished running node model.globe.stg_worldbank_total_statistics
+[0m01:16:51.849524 [debug] [Thread-2 (]: Began running node model.globe.mart_complete_countries
+[0m01:16:51.849706 [info ] [Thread-2 (]: 2 of 2 START sql table model public_marts.mart_complete_countries .............. [RUN]
+[0m01:16:51.849867 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly list_globe_public_marts, now model.globe.mart_complete_countries)
+[0m01:16:51.849996 [debug] [Thread-2 (]: Began compiling node model.globe.mart_complete_countries
+[0m01:16:51.851321 [debug] [Thread-2 (]: Writing injected SQL for node "model.globe.mart_complete_countries"
+[0m01:16:51.851606 [debug] [Thread-2 (]: Began executing node model.globe.mart_complete_countries
+[0m01:16:51.859907 [debug] [Thread-2 (]: Writing runtime sql for node "model.globe.mart_complete_countries"
+[0m01:16:51.860309 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:16:51.860496 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+
+  
+    
+
+  create  table "globe"."public_marts"."mart_complete_countries__dbt_tmp"
+  
+  
+    as
+  
+  (
+    with staging as (
+    select * from "globe"."public_staging"."stg_worldbank_total_statistics"
+),
+
+continents as (
+    select * from "globe"."public"."iso3_to_continent"
+),
+
+coords as (
+    select * from "globe"."public"."iso3_to_coords"
+),
+
+year_spine as (
+    select generate_series(2000, 2023) as reporting_year
+),
+
+country_spine as (
+    select distinct iso3, country_name from staging
+),
+
+grid as (
+    select
+        c.country_name,
+        c.iso3,
+        y.reporting_year
+    from country_spine c
+    cross join year_spine y
+),
+
+joined_grid as (
+    select
+        g.country_name,
+        g.iso3,
+        g.reporting_year,
+        s.homicide_rate,
+        s.sexual_violence
+    from grid g
+    left join staging s on g.iso3 = s.iso3 and g.reporting_year = s.reporting_year
+),
+
+with_latest_year as (
+    select
+        country_name,
+        iso3,
+        reporting_year,
+        max(case when homicide_rate is not null then reporting_year end) over (
+            partition by iso3 
+            order by reporting_year 
+            rows between unbounded preceding and current row
+        ) as latest_year_with_data,
+        max(case when sexual_violence is not null then reporting_year end) over (
+            partition by iso3
+        ) as latest_year_with_sv
+    from joined_grid
+),
+
+filled as (
+    select
+        w.country_name,
+        w.iso3,
+        w.reporting_year,
+        w.latest_year_with_data as data_year,
+        w.latest_year_with_sv as sv_data_year,
+        s_h.homicide_rate,
+        s_sv.sexual_violence
+    from with_latest_year w
+    left join staging s_h on w.iso3 = s_h.iso3 and w.latest_year_with_data = s_h.reporting_year
+    left join staging s_sv on w.iso3 = s_sv.iso3 and w.latest_year_with_sv = s_sv.reporting_year
+),
+
+joined as (
+    select
+        f.country_name,
+        f.iso3,
+        c.continent,
+        f.reporting_year,
+        f.data_year,
+        f.sv_data_year,
+        f.homicide_rate,
+        f.sexual_violence,
+        co.latitude,
+        co.longitude,
+        -- Generate a PostGIS Point geometry (SRID 4326 for WGS84)
+        public.ST_SetSRID(public.ST_MakePoint(co.longitude::double precision, co.latitude::double precision), 4326) as geom
+    from filled f
+    left join continents c on f.iso3 = c.iso3
+    left join coords co on f.iso3 = co.iso3
+)
+
+select *
+from joined
+where
+    country_name is not null
+    and iso3 is not null
+    and reporting_year is not null
+    and (homicide_rate is not null or sexual_violence is not null)
+    and latitude is not null
+    and longitude is not null
+  );
+  
+[0m01:16:51.860822 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m01:16:52.001126 [debug] [Thread-2 (]: SQL status: SELECT 4871 in 0.140 seconds
+[0m01:16:52.004434 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:16:52.004606 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+alter table "globe"."public_marts"."mart_complete_countries" rename to "mart_complete_countries__dbt_backup"
+[0m01:16:52.006015 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m01:16:52.007432 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:16:52.007594 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+alter table "globe"."public_marts"."mart_complete_countries__dbt_tmp" rename to "mart_complete_countries"
+[0m01:16:52.008224 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.000 seconds
+[0m01:16:52.009733 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: COMMIT
+[0m01:16:52.009876 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:16:52.009993 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: COMMIT
+[0m01:16:52.014416 [debug] [Thread-2 (]: SQL status: COMMIT in 0.004 seconds
+[0m01:16:52.015340 [debug] [Thread-2 (]: Applying DROP to: "globe"."public_marts"."mart_complete_countries__dbt_backup"
+[0m01:16:52.016474 [debug] [Thread-2 (]: Using postgres connection "model.globe.mart_complete_countries"
+[0m01:16:52.016613 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: /* {"app": "dbt", "dbt_version": "1.11.10", "profile_name": "globe", "target_name": "dev", "node_id": "model.globe.mart_complete_countries"} */
+drop table if exists "globe"."public_marts"."mart_complete_countries__dbt_backup" cascade
+[0m01:16:52.026471 [debug] [Thread-2 (]: SQL status: DROP TABLE in 0.010 seconds
+[0m01:16:52.027015 [debug] [Thread-2 (]: On model.globe.mart_complete_countries: Close
+[0m01:16:52.027308 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '455b647d-97e5-49d3-9a51-6f8a33200626', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bea33e0>]}
+[0m01:16:52.027569 [info ] [Thread-2 (]: 2 of 2 OK created sql table model public_marts.mart_complete_countries ......... [[32mSELECT 4871[0m in 0.18s]
+[0m01:16:52.027776 [debug] [Thread-2 (]: Finished running node model.globe.mart_complete_countries
+[0m01:16:52.028331 [debug] [MainThread]: On master: COMMIT
+[0m01:16:52.028478 [debug] [MainThread]: Using postgres connection "master"
+[0m01:16:52.028585 [debug] [MainThread]: On master: COMMIT
+[0m01:16:52.028684 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m01:16:52.065268 [debug] [MainThread]: SQL status: COMMIT in 0.037 seconds
+[0m01:16:52.065471 [debug] [MainThread]: On master: Close
+[0m01:16:52.065659 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m01:16:52.065766 [debug] [MainThread]: Connection 'model.globe.stg_worldbank_total_statistics' was properly closed.
+[0m01:16:52.065850 [debug] [MainThread]: Connection 'model.globe.mart_complete_countries' was properly closed.
+[0m01:16:52.065929 [debug] [MainThread]: Connection 'list_globe_public_staging' was properly closed.
+[0m01:16:52.066035 [info ] [MainThread]: 
+[0m01:16:52.066155 [info ] [MainThread]: Finished running 1 table model, 1 view model in 0 hours 0 minutes and 0.62 seconds (0.62s).
+[0m01:16:52.066450 [debug] [MainThread]: Command end result
+[0m01:16:52.078972 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/manifest.json
+[0m01:16:52.080068 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/semantic_manifest.json
+[0m01:16:52.083118 [debug] [MainThread]: Wrote artifact RunExecutionResult to /Users/samirkatakamsetty/Desktop/Home/Data Engineering Projects/globe/backend/dbt/target/run_results.json
+[0m01:16:52.083299 [info ] [MainThread]: 
+[0m01:16:52.083552 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m01:16:52.083671 [info ] [MainThread]: 
+[0m01:16:52.083808 [info ] [MainThread]: Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+[0m01:16:52.085690 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 0.98551536, "process_in_blocks": "0", "process_kernel_time": 0.201628, "process_mem_max_rss": "131334144", "process_out_blocks": "0", "process_user_time": 0.922109}
+[0m01:16:52.085935 [debug] [MainThread]: Command `dbt run` succeeded at 01:16:52.085899 after 0.99 seconds
+[0m01:16:52.086086 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c07fbb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c061d90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10997ad50>]}
+[0m01:16:52.086238 [debug] [MainThread]: Flushing usage events
+[0m01:16:52.275721 [debug] [MainThread]: An error was encountered while trying to flush usage events

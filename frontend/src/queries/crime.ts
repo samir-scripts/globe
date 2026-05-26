@@ -43,3 +43,18 @@ export const GET_HOMICIDE_TIME_SERIES = `
     }
   }
 `;
+
+export const GET_ALL_DATA = `
+  query GetAllData {
+    mart_complete_countries(order_by: {reporting_year: asc}) {
+      country_name
+      iso3
+      continent
+      reporting_year
+      data_year
+      sv_data_year
+      homicide_rate
+      sexual_violence
+    }
+  }
+`;

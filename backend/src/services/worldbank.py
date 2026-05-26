@@ -171,6 +171,18 @@ def process_and_load_data():
             except Exception as conn_err:
                 print(f"Skipped loading database on port {port}: {conn_err}")
                 
+        if write_success:
+            try:
+                print("Triggering frontend revalidation webhook...")
+                revalidate_url = os.getenv("FRONTEND_URL", "http://localhost:3000") + "/api/revalidate"
+                response = requests.post(revalidate_url, json={}, timeout=5)
+                if response.status_code == 200:
+                    print("Frontend static page revalidated successfully!")
+                else:
+                    print(f"Frontend revalidation returned status: {response.status_code}")
+            except Exception as web_err:
+                print(f"Failed to trigger frontend revalidation webhook: {web_err}")
+
         return write_success
     except Exception as e:
         print(f"Error during processing/loading: {e}")
