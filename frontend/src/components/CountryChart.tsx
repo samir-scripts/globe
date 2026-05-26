@@ -28,6 +28,7 @@ const CONTINENTS = ["All", "Africa", "Americas", "Asia", "Europe", "Oceania"];
 interface HomicideDataPoint {
   reporting_year: number;
   homicide_rate: number;
+  sexual_violence: number;
   country_name: string;
 }
 
@@ -50,7 +51,8 @@ export default function CountryChart() {
   const [data, setData] = useState<HomicideDataPoint[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const lastFetchedIso3 = useRef<string | null>(null);
+  const [lastFetchedIso3, useRefState] = useState<string | null>(null);
+  const lastFetchedIso3Ref = useRef<string | null>(null);
 
   const fetchData = useCallback(async (iso3: string) => {
     setLoading(true);
@@ -71,14 +73,14 @@ export default function CountryChart() {
 
   useEffect(() => {
     if (!selectedCountryIso3 || !isChartPanelOpen) return;
-    if (lastFetchedIso3.current === selectedCountryIso3) return;
-    lastFetchedIso3.current = selectedCountryIso3;
+    if (lastFetchedIso3Ref.current === selectedCountryIso3) return;
+    lastFetchedIso3Ref.current = selectedCountryIso3;
     fetchData(selectedCountryIso3);
   });
 
   useEffect(() => {
     if (!isChartPanelOpen) {
-      lastFetchedIso3.current = null;
+      lastFetchedIso3Ref.current = null;
     }
   }, [isChartPanelOpen]);
 
@@ -175,8 +177,9 @@ export default function CountryChart() {
               Metric Type
             </label>
             <Select
-              value={metric}
+              value={activeMetric === "sexual_assault" ? "homicide_rate" : metric}
               onValueChange={(val) => setMetric(val as MetricType)}
+              disabled={activeMetric === "sexual_assault"}
             >
               <SelectTrigger className="bg-background border-border text-foreground">
                 <SelectValue placeholder="Type" />
@@ -193,14 +196,16 @@ export default function CountryChart() {
       {/* Chart Section */}
       <div className="flex-1 flex flex-col px-5 py-6 overflow-y-auto">
         <h3 className="text-xs uppercase tracking-wider text-card-foreground/50 mb-6 font-mono">
-          {currentMetricConfig.label}{" "}
-          {metric === "homicide_rate" ? "Rate" : "Count"} Over Time
+          {currentMetricConfig.label} ({currentMetricConfig.unit}) Over Time
         </h3>
 
         {loading && (
           <div className="flex-1 flex items-center justify-center">
             <div className="flex flex-col items-center gap-3">
-              <div className="h-8 w-8 border-2 border-card-foreground/20 border-t-red-500 rounded-full animate-spin" />
+              <div 
+                className="h-8 w-8 border-2 border-card-foreground/20 rounded-full animate-spin" 
+                style={{ borderTopColor: currentMetricConfig.color }}
+              />
               <span className="text-xs text-card-foreground/50">
                 Loading data…
               </span>
@@ -273,12 +278,12 @@ export default function CountryChart() {
                   labelFormatter={(label) => `Year: ${label}`}
                   formatter={(value) => [
                     Number(value).toFixed(2),
-                    currentMetricConfig.label,
+                    `${currentMetricConfig.label} (${currentMetricConfig.unit})`,
                   ]}
                 />
                 <Line
                   type="monotone"
-                  dataKey={metric}
+                  dataKey={activeMetric === "sexual_assault" ? "sexual_violence" : metric}
                   stroke={currentMetricConfig.color}
                   strokeWidth={2}
                   dot={{

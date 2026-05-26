@@ -17,12 +17,11 @@ export const METRICS: MetricConfig[] = [
     rateField: 'homicide_rate',
     color: '#DC2626', // Red
   },
-  // Placeholder for future extension
-  // {
-  //   id: 'sexual_assault',
-  //   label: 'Sexual Assault',
-  //   unit: 'per 100k',
-  //   rateField: 'assault_rate',
-  //   color: '#7C3AED', // Purple
-  // }
+  {
+    id: 'sexual_assault',
+    label: 'Sexual Assault',
+    unit: '% of women',
+    rateField: 'sexual_violence',
+    color: '#8B5CF6', // Purple
+  }
 ];

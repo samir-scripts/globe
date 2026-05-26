@@ -6,7 +6,9 @@ export const GET_HOMICIDE_DATA = `
       continent
       reporting_year
       data_year
+      sv_data_year
       homicide_rate
+      sexual_violence
       geom
     }
   }
@@ -20,7 +22,9 @@ export const GET_HOMICIDE_DATA_BY_CONTINENT = `
       continent
       reporting_year
       data_year
+      sv_data_year
       homicide_rate
+      sexual_violence
       geom
     }
   }
@@ -34,6 +38,7 @@ export const GET_HOMICIDE_TIME_SERIES = `
     ) {
       reporting_year
       homicide_rate
+      sexual_violence
       country_name
     }
   }

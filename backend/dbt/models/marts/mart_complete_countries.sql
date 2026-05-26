@@ -95,7 +95,7 @@ where
     country_name is not null
     and iso3 is not null
     and reporting_year is not null
-    and homicide_rate is not null
+    and (homicide_rate is not null or sexual_violence is not null)
     and latitude is not null
     and longitude is not null
 

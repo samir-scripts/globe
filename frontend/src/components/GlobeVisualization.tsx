@@ -34,7 +34,9 @@ interface HomicideRecord {
   continent: string;
   reporting_year: number;
   data_year: number;
-  homicide_rate: number;
+  sv_data_year?: number;
+  homicide_rate: number | null;
+  sexual_violence: number | null;
   geom: unknown;
 }
 
@@ -51,6 +53,8 @@ interface GeoJsonCollection {
 
 interface EnrichedProperties extends Record<string, unknown> {
   homicide_rate: number;
+  sexual_violence: number;
+  rateValue: number;
   country_name: string;
   iso3: string;
   hasData: boolean;
@@ -68,21 +72,29 @@ interface EnrichedFeature extends GeoJsonFeature {
   properties: EnrichedProperties;
 }
 
-// Color interpolation for homicide rate heat map
-function getHeatColor(rate: number): string {
-  // Normalize rate: 0 = low, 1 = high (cap at 30 per 100k)
-  const t = Math.min(rate / 30, 1);
-
-  // Original light mode heat colors: light gray → dim red → vivid red
-  const r = Math.round(220 + t * 20);
-  const g = Math.round(220 - t * 185);
-  const b = Math.round(220 - t * 185);
-  const a = 0.4 + t * 0.55;
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
+// Color interpolation for heat maps
+function getHeatColor(rate: number, type: 'homicide' | 'sexual_assault'): string {
+  if (type === 'homicide') {
+    // Normalize rate: 0 = low, 1 = high (cap at 30 per 100k)
+    const t = Math.min(rate / 30, 1);
+    const r = Math.round(220 + t * 20);
+    const g = Math.round(220 - t * 185);
+    const b = Math.round(220 - t * 185);
+    const a = 0.4 + t * 0.55;
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  } else {
+    // Sexual assault is percentage: 0 = low, 1 = high (cap at 50%)
+    const t = Math.min(rate / 50, 1);
+    const r = Math.round(220 - t * 81);
+    const g = Math.round(220 - t * 128);
+    const b = Math.round(220 + t * 26);
+    const a = 0.4 + t * 0.55;
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
 }
 
 export default function GlobeVisualization() {
-  const { continent, year, selectCountry } = useFilterStore();
+  const { continent, year, selectCountry, activeMetric } = useFilterStore();
   const [countriesData, setCountriesData] = useState<HomicideRecord[]>([]);
   const [geoJson, setGeoJson] = useState<GeoJsonCollection | null>(null);
   const [loadingGeoJson, setLoadingGeoJson] = useState(true);
@@ -177,21 +189,43 @@ export default function GlobeVisualization() {
       const countryStats = countriesData.find(
         (d) => d.iso3?.trim().toUpperCase() === resolvedIso3,
       );
+
+      const isHomicide = activeMetric === "homicide";
+      const hasMetricData = countryStats 
+        ? (isHomicide 
+            ? countryStats.homicide_rate !== null 
+            : countryStats.sexual_violence !== null)
+        : false;
+      
+      const rateValue = countryStats
+        ? (isHomicide 
+            ? (countryStats.homicide_rate ?? 0) 
+            : (countryStats.sexual_violence ?? 0))
+        : 0;
+
+      const dataYear = countryStats
+        ? (isHomicide 
+            ? countryStats.data_year 
+            : countryStats.sv_data_year)
+        : undefined;
+
       return {
         ...feat,
         properties: {
           ...feat.properties,
+          rateValue,
           homicide_rate: countryStats?.homicide_rate || 0,
+          sexual_violence: countryStats?.sexual_violence || 0,
           country_name:
             countryStats?.country_name || (props.admin as string) || "",
           iso3: resolvedIso3,
-          hasData: !!countryStats,
-          data_year: countryStats?.data_year,
+          hasData: hasMetricData,
+          data_year: dataYear,
           reporting_year: countryStats?.reporting_year,
         } as EnrichedProperties,
       };
     });
-  }, [geoJson, countriesData]);
+  }, [geoJson, countriesData, activeMetric]);
 
   // Callbacks for polygon styling
   const getPolygonCapColor = useCallback((d: object) => {
@@ -199,8 +233,8 @@ export default function GlobeVisualization() {
     if (!feat.properties.hasData) {
       return "rgba(0, 0, 0, 0.03)";
     }
-    return getHeatColor(feat.properties.homicide_rate);
-  }, []);
+    return getHeatColor(feat.properties.rateValue, activeMetric as 'homicide' | 'sexual_assault');
+  }, [activeMetric]);
 
   const getPolygonStrokeColor = useCallback(() => {
     return "rgba(0, 0, 0, 0.3)";
@@ -212,10 +246,10 @@ export default function GlobeVisualization() {
 
   const getPolygonAltitude = useCallback((d: object) => {
     const feat = d as EnrichedFeature;
-    return feat.properties.hasData
-      ? 0.006 + feat.properties.homicide_rate / 500
-      : 0.004;
-  }, []);
+    if (!feat.properties.hasData) return 0.004;
+    const divider = activeMetric === "homicide" ? 500 : 800;
+    return 0.006 + feat.properties.rateValue / divider;
+  }, [activeMetric]);
 
   const getPolygonLabel = useCallback(
     (d: object) => {
@@ -226,7 +260,7 @@ export default function GlobeVisualization() {
       const muted = "#737373";
 
       const rateText = feat.properties.hasData
-        ? feat.properties.homicide_rate.toFixed(2)
+        ? feat.properties.rateValue.toFixed(2)
         : "0.00";
 
       let yearSuffix = "";
@@ -238,14 +272,17 @@ export default function GlobeVisualization() {
         yearSuffix = ` <span style="font-size:10px; opacity:0.8;">(${feat.properties.data_year} data)</span>`;
       }
 
+      const labelPrefix = activeMetric === "homicide" ? "Homicide Rate" : "Sexual Assault";
+      const unitSuffix = activeMetric === "homicide" ? "per 100k" : "% of women";
+
       return `
       <div style="background:${bg}; padding:10px 14px; border-radius:6px; border:1px solid ${border}; font-family:'JetBrains Mono',monospace; font-size:12px;">
         <div style="color:${text}; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">${feat.properties.country_name || feat.properties.admin}</div>
-        <div style="color:${muted};">Rate: ${rateText} per 100k${yearSuffix}</div>
+        <div style="color:${muted};">${labelPrefix}: ${rateText} ${unitSuffix}${yearSuffix}</div>
       </div>
     `;
     },
-    [year],
+    [year, activeMetric],
   );
 
   const handlePolygonClick = useCallback(
