@@ -24,26 +24,16 @@ export default function GlobalFilters() {
     setActiveMetric,
   } = useFilterStore();
 
-  const currentMetric = METRICS.find((m) => m.id === activeMetric) || METRICS[0];
+  const currentMetric =
+    METRICS.find((m) => m.id === activeMetric) || METRICS[0];
 
   return (
-    <div className="absolute top-6 right-6 z-30 w-80 bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] transition-all duration-300 hover:border-white/20 select-none font-mono">
+    <div className="absolute top-6 center-6 z-30 w-80 bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] transition-all duration-300 hover:border-white/20 select-none font-mono">
       {/* Glow effect matching current metric */}
-      <div 
+      <div
         className="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-3xl opacity-20 transition-all duration-500 pointer-events-none"
         style={{ backgroundColor: currentMetric.color }}
       />
-      
-      {/* Title */}
-      <div className="flex items-center gap-2 mb-5 pb-3 border-b border-white/10">
-        <span 
-          className="h-2 w-2 rounded-full animate-pulse transition-colors duration-500" 
-          style={{ backgroundColor: currentMetric.color }}
-        />
-        <span className="text-[10px] text-white/50 uppercase tracking-widest font-semibold">
-          Data Stream Controller
-        </span>
-      </div>
 
       <div className="space-y-6">
         {/* Metric Selector (Tabs) */}
@@ -59,17 +49,21 @@ export default function GlobalFilters() {
                   key={m.id}
                   onClick={() => setActiveMetric(m.id as MetricId)}
                   className={`py-2 px-3 text-center text-xs font-semibold rounded-lg transition-all duration-300 relative cursor-pointer ${
-                    isActive 
-                      ? "text-white shadow-lg shadow-black/40" 
+                    isActive
+                      ? "text-white shadow-lg shadow-black/40"
                       : "text-white/40 hover:text-white/70"
                   }`}
                   style={{
-                    backgroundColor: isActive ? "rgba(255,255,255,0.08)" : "transparent",
-                    border: isActive ? `1px solid ${m.color}44` : "1px solid transparent"
+                    backgroundColor: isActive
+                      ? "rgba(255,255,255,0.08)"
+                      : "transparent",
+                    border: isActive
+                      ? `1px solid ${m.color}44`
+                      : "1px solid transparent",
                   }}
                 >
                   {isActive && (
-                    <span 
+                    <span
                       className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full"
                       style={{ backgroundColor: m.color }}
                     />
@@ -113,12 +107,12 @@ export default function GlobalFilters() {
             <label className="text-[10px] text-white/40 uppercase tracking-wider">
               Reporting Year
             </label>
-            <span 
+            <span
               className="text-xs font-bold px-2 py-0.5 rounded-md text-white transition-all duration-300 font-mono shadow-[0_0_10px_rgba(255,255,255,0.05)]"
-              style={{ 
+              style={{
                 backgroundColor: `${currentMetric.color}22`,
                 border: `1px solid ${currentMetric.color}44`,
-                textShadow: `0 0 4px ${currentMetric.color}aa`
+                textShadow: `0 0 4px ${currentMetric.color}aa`,
               }}
             >
               {year}
@@ -133,13 +127,13 @@ export default function GlobalFilters() {
               onValueChange={(val) => {
                 if (Array.isArray(val)) {
                   setYear(val[0]);
-                } else if (typeof val === 'number') {
+                } else if (typeof val === "number") {
                   setYear(val);
                 }
               }}
               className="py-2 cursor-pointer [&_[role=slider]]:bg-white [&_[role=slider]]:border-white/50 [&_[role=slider]]:w-4 [&_[role=slider]]:h-4 [&_[role=slider]]:shadow-lg"
               style={{
-                color: currentMetric.color
+                color: currentMetric.color,
               }}
             />
           </div>
