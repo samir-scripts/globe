@@ -144,25 +144,6 @@ export default function CountryChart() {
               </SelectContent>
             </Select>
           </div>
-
-          <div className="space-y-2">
-            <label className="text-xs text-muted-foreground uppercase tracking-wide font-mono">
-              Metric Type
-            </label>
-            <Select
-              value={activeMetric === "sexual_assault" ? "homicide_rate" : metric}
-              onValueChange={(val) => setMetric(val as MetricType)}
-              disabled={activeMetric === "sexual_assault"}
-            >
-              <SelectTrigger className="bg-background border-border text-foreground">
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border text-card-foreground">
-                <SelectItem value="homicide_rate">Rate</SelectItem>
-                <SelectItem value="homicide_count">Count</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
       </div>
 
@@ -175,8 +156,8 @@ export default function CountryChart() {
         {loading && (
           <div className="flex-1 flex items-center justify-center">
             <div className="flex flex-col items-center gap-3">
-              <div 
-                className="h-8 w-8 border-2 border-card-foreground/20 rounded-full animate-spin" 
+              <div
+                className="h-8 w-8 border-2 border-card-foreground/20 animate-spin"
                 style={{ borderTopColor: currentMetricConfig.color }}
               />
               <span className="text-xs text-card-foreground/50">
@@ -256,7 +237,11 @@ export default function CountryChart() {
                 />
                 <Line
                   type="monotone"
-                  dataKey={activeMetric === "sexual_assault" ? "sexual_violence" : metric}
+                  dataKey={
+                    activeMetric === "sexual_assault"
+                      ? "sexual_violence"
+                      : metric
+                  }
                   stroke={currentMetricConfig.color}
                   strokeWidth={2}
                   dot={{

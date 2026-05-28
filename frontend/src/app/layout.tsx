@@ -8,8 +8,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Globe - Homicide Data Visualization",
-  description: "Global homicide data visualization using Next.js, Hasura, and Three.js",
+  title: ".globe – data visualization of world statistics",
+  description:
+    "data visualization using Next.js, Hasura, Three.js, SQL, Python, dbt...",
 };
 
 export default function RootLayout({
@@ -23,10 +24,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-mono">
-        {children}
-      </body>
+      <body className="min-h-full flex flex-col font-mono">{children}</body>
     </html>
   );
 }
-
